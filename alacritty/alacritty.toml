@@ -1,0 +1,16 @@
+[font]
+size = 14.2
+
+[font.normal]
+family = "FiraMono Nerd Font"
+style = "Regular"
+
+[window]
+opacity = 0.7
+
+[window.padding]
+x = 5
+y = 5
+[shell]
+program = "/usr/bin/zsh"
+
