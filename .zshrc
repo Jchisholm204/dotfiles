@@ -5,6 +5,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 source /etc/profile.d/modules.sh
 
+alias clear="clear && zsh"
+
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
@@ -25,3 +27,5 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(starship init zsh)"
 
+# Display System info on terminal opening
+fastfetch --config examples/9
