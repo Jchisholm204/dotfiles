@@ -1,0 +1,16 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	email = jacobchisholm1010@gmail.com
+	name = Jacob Chisholm
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[alias]
+    bb = !~/dotfiles/git/better-branch.sh
+    ca = !~/dotfiles/git/clone-all.sh
