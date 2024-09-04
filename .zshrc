@@ -17,6 +17,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 #alias clear="clear && zsh"
+alias got=git
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"

@@ -14,3 +14,5 @@
 [alias]
     bb = !~/dotfiles/git/better-branch.sh
     ca = !~/dotfiles/git/clone-all.sh
+[push]
+	autoSetupRemote = true
