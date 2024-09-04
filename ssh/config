@@ -1,0 +1,12 @@
+# Queensu Gitlab
+Host code.engineering.queensu.ca
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_gitlab
+
+Host narval
+    Hostname narval.alliancecan.ca
+    Port 22
+    User jc204
+    IdentityFile ~/.ssh/id_drac
+
+
