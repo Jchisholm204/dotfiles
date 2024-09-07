@@ -9,4 +9,18 @@ Host narval
     User jc204
     IdentityFile ~/.ssh/id_drac
 
+Host narval1
+    Hostname narval1.alliancecan.ca
+    Port 22
+    User jc204
+    IdentityFile ~/.ssh/id_drac
+
+Host whisper
+    Hostname whisper.engineering.queensu.ca
+    Port 2275
+    User 21jc138
+
+Host orchid
+    Hostname ececluster.queensu.ca
+    User 21jc138
 
