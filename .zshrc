@@ -7,6 +7,8 @@ export ZSH="$HOME/.oh-my-zsh"
 distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
 if   [ "$distro_id" = "fedora" ]; then
     source /etc/profile.d/modules.sh
+    source /usr/lib64/ros2-humble/setup.zsh
+    # export $PATH=$PATH:/usr/arm-none-eabi/include
 elif [ "$distro_id" = "ubuntu" ]; then
     # source /etc/profile.d/modules.sh
     source /opt/ros/humble/setup.zsh

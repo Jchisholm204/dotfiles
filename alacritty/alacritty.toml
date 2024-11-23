@@ -11,6 +11,8 @@ opacity = 0.7
 [window.padding]
 x = 5
 y = 5
-[shell]
+
+[terminal]
+[terminal.shell]
 program = "/usr/bin/zsh"
 

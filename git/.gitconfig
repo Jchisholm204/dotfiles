@@ -16,3 +16,5 @@
     ca = !~/dotfiles/git/clone-all.sh
 [push]
 	autoSetupRemote = true
+[credential]
+	helper = store
