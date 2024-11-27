@@ -1,4 +1,3 @@
-#!/bin/bash
 
 echo "Installing JC204 Config"
 C_DIR=$(pwd)
