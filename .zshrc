@@ -9,6 +9,8 @@ if   [ "$distro_id" = "fedora" ]; then
     source /etc/profile.d/modules.sh
     source /usr/lib64/ros2-humble/setup.zsh
     # export $PATH=$PATH:/usr/arm-none-eabi/include
+    export PATH=$PATH:/home/jacob/intelFPGA/18.1/modelsim_ase/bin
+    export PATH=$PATH:/home/jacob/altera/13.0sp1/quartus/bin
 elif [ "$distro_id" = "ubuntu" ]; then
     # source /etc/profile.d/modules.sh
     source /opt/ros/humble/setup.zsh
