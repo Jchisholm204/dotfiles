@@ -13,6 +13,6 @@ x = 5
 y = 5
 
 [terminal]
-[shell]
-program = "/run/current-system/sw/bin/zsh"
+[terminal.shell]
+program = "/usr/bin/zsh"
 
