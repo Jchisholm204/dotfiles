@@ -16,6 +16,22 @@ if [ "$ans" == "n" ]; then
     git submodule update
 fi
 
+# Install Function (for different distros)
+install() {
+    if [ $1 == "" ]; then
+        return 1
+    fi
+    echo "Installing $1 for $distro_id"
+    if [ "$distro_id" = "fedora" ]; then
+        sudo dnf install $1
+    elif [ "$distro_id" = "ubuntu" ]; then
+        sudo apt-get install $1
+    elif [ "$distro_id" = "archlinux" ]; then
+        pacman -S $1
+    fi
+    return 0
+}
+
 echo "Setting up Fonts"
 
 FONT_DIR="$HOME/.local/share/fonts"
@@ -40,16 +56,28 @@ fi
 
 echo "Installed Fonts"
 
+echo "Install Alacritty? [y/n]"
+read -r ans
+if [ "$ans" == "y" ]; then
+    install "alacritty"
+    if [ ! -d "$HOME/.config/alacritty" ]; then
+        echo "Found an old Alacritty Config"
+        echo "Would you like to backup? [y/n]"
+        read -r ans
+        if [ "$ans" == "y" ]; then
+            mv "$HOME/.config/alacritty" "$HOME/.config/alacritty.bak"
+        else
+            rm -r "$HOME/.config/alacritty"
+        fi
+    fi
+    ln -s $(pwd)/alacritty "$HOME/.config/"
+fi
+
+
 echo "Set up ZSH? [y/n]:"
 read -r ans
 if [ "$ans" == "y" ]; then
-    if [ "$distro_id" = "fedora" ]; then
-        sudo dnf install zsh
-    elif [ "$distro_id" = "ubuntu" ]; then
-        sudo apt-get install zsh
-    elif [ "$distro_id" = "archlinux" ]; then
-        pacman -S zsh
-    fi
+    install "zsh"
     echo "Install OhMyZsh? [y/n]"
     read -r ans
     if [ "$ans" == "y" ]; then
@@ -70,13 +98,7 @@ read -r ans
 if [ "$ans" == "y" ]; then
     if [ ! $(ls /bin | grep tmux) == "tmux"]; then
         echo "Attempting to install tmux"
-        if [ "$distro_id" = "fedora" ]; then
-            sudo dnf install tmux
-        elif [ "$distro_id" = "ubuntu" ]; then
-            sudo apt-get install tmux
-        elif [ "$distro_id" = "archlinux" ]; then
-            pacman -S tmux
-        fi
+        install "tmux"
     else
         echo "TMUX Installation Found"
     fi
@@ -93,6 +115,23 @@ if [ "$ans" == "y" ]; then
     fi
     ln -s $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
     tmux source $HOME/.tmux.conf
+fi
+
+echo "Set up Git? [y/n]"
+read -r ans
+if [ "$ans" == "y" ]; then
+    echo "Looking for old Git Config"
+    if [ ! -d "$HOME/.gitconfig" ]; then
+        echo "Found an old Git Config"
+        echo "Would you like to backup? [y/n]"
+        read -r ans
+        if [ "$ans" == "y" ]; then
+            mv "$HOME/.gitconfig" "$HOME/.gitconfig.bak"
+        else
+            rm "$HOME/.gitconfig"
+        fi
+    fi
+    ln -s "$(pwd)/git/.gitconfig" "$HOME/.gitconfig"
 fi
     
 echo "Install Completed."
