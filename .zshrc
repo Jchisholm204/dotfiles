@@ -35,6 +35,10 @@ elif [ "$distro_id" = "ubuntu" ]; then
     fi
 fi
 
+if [ -d "$HOME/.local/bin/" ]; then
+    export PATH=$PATH:$HOME/.local/bin
+fi
+
 # Export Function for ModelSim/Quartus if they are installed
 # $1 type: quartus or modelsim_ase
 function exportAltera() {

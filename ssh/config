@@ -23,4 +23,7 @@ Host whisper
 Host orchid
     Hostname ececluster.queensu.ca
     User 21jc138
+Host qarm
+    Hostname QSET-ARM.local
+    User qset
 
