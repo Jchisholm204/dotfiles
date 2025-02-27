@@ -16,6 +16,8 @@ if   [ "$distro_id" = "fedora" ]; then
     # Check and source ROS2 if it has been installed
     if [ -d "/usr/lib64/ros2-humble" ]; then
         source /usr/lib64/ros2-humble/setup.zsh
+    elif [ -d "/usr/lib64/ros2-jazzy" ]; then
+        source /usr/lib64/ros2-jazzy/setup.zsh
     fi
 
 # Setup for Ubuntu
