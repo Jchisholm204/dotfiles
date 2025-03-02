@@ -69,9 +69,13 @@ function exportAltera() {
         echo "Error: $1 $2 not found"
     fi
 }
+
+# Only attempt to source modelsim + quartus on fedora
+if   [ "$distro_id" = "fedora" ]; then
 # Call the function to source the installed versions of modelsim/quartus
 exportAltera "quartus" "13.0sp1"
 exportAltera "modelsim_ase" "18.1"
+fi
 unfunction exportAltera
 
 export EDITOR=nvim
@@ -101,4 +105,9 @@ source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"
 
 # Display System info on terminal opening
-fastfetch --config examples/9
+if [ -f "/bin/fastfetch" ]; then
+    fastfetch --config examples/9
+elif [ -f "/bin/neofetch" ]; then
+    neofetch --ascii_distro tiny
+fi
+
