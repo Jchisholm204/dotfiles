@@ -4,6 +4,21 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+function source_cuda(){
+    if [ $# -ne 1 ]; then
+        echo "Function source_cuda called with incorrect number of arguments"
+        echo 'Expects one argument: "cuda version"'
+        echo 'Version: "12.8"'
+        return
+    fi
+    # Test and export CUDA
+    if [ -d "/usr/local/cuda-$1" ]; then
+        export PATH=/usr/local/cuda-$1/bin${PATH:+:${PATH}}
+        export LD_LIBRARY_PATH=/usr/local/cuda-$1/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+    fi
+
+}
+
 distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
 # Change source paths depending on distro (Desktop=Ubuntu:Laptop=Fedora)
 # Setup for Fedora
@@ -19,6 +34,8 @@ if   [ "$distro_id" = "fedora" ]; then
     elif [ -d "/usr/lib64/ros2-jazzy" ]; then
         source /usr/lib64/ros2-jazzy/setup.zsh
     fi
+    # Test and export CUDA
+    source_cuda "12.8"
 
 # Setup for Ubuntu
 elif [ "$distro_id" = "ubuntu" ]; then
@@ -73,8 +90,8 @@ function exportAltera() {
 # Only attempt to source modelsim + quartus on fedora
 if   [ "$distro_id" = "fedora" ]; then
 # Call the function to source the installed versions of modelsim/quartus
-exportAltera "quartus" "13.0sp1"
-exportAltera "modelsim_ase" "18.1"
+# exportAltera "quartus" "13.0sp1"
+# exportAltera "modelsim_ase" "18.1"
 fi
 unfunction exportAltera
 
