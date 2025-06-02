@@ -34,8 +34,16 @@ if   [ "$distro_id" = "fedora" ]; then
     elif [ -d "/usr/lib64/ros2-jazzy" ]; then
         source /usr/lib64/ros2-jazzy/setup.zsh
     fi
+<<<<<<< HEAD
     # Test and export CUDA
     source_cuda "12.8"
+=======
+    # Check for the riscv toolchain
+    # Installed under opt/riscv
+    if [ -d "/opt/riscv/bin" ]; then
+    export PATH=$PATH:/opt/riscv/bin
+    fi
+>>>>>>> 802f3b8 (path riscv toolchain)
 
 # Setup for Ubuntu
 elif [ "$distro_id" = "ubuntu" ]; then
