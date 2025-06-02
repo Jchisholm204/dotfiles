@@ -26,4 +26,7 @@ Host orchid
 Host qarm
     Hostname QSET-ARM.local
     User qset
-
+Host odpok
+    Hostname jchisholm.ooguy.com
+    Port 2021
+    User jacob
