@@ -1,0 +1,4 @@
+# Keep SSH config, not keys
+ssh/*
+!ssh/
+!ssh/config
