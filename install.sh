@@ -1,3 +1,4 @@
+#!/bin/sh
 # Dotfiles Install Script
 # Jchisholm204.github.io
 
