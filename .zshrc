@@ -36,6 +36,11 @@ if   [ "$distro_id" = "fedora" ]; then
     fi
     # Test and export CUDA
     source_cuda "12.8"
+    # Check for the riscv toolchain
+    # Installed under opt/riscv
+    if [ -d "/opt/riscv/bin" ]; then
+    export PATH=$PATH:/opt/riscv/bin
+    fi
 
 # Setup for Ubuntu
 elif [ "$distro_id" = "ubuntu" ]; then

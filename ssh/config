@@ -34,3 +34,7 @@ Host qarm
 Host para
     Hostname qse-ece-para-knl.smithengineering.queensu.ca
     User 21jc138
+Host odpok
+    Hostname jchisholm.ooguy.com
+    Port 2021
+    User jacob
