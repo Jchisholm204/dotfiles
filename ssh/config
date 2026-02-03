@@ -3,6 +3,11 @@ Host code.engineering.queensu.ca
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/id_gitlab
 
+# Queensu Gitlab
+Host code.smithengineering.queensu.ca
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_gitlabft
+
 Host narval
     Hostname narval.alliancecan.ca
     Port 22
@@ -26,6 +31,9 @@ Host orchid
 Host qarm
     Hostname QSET-ARM.local
     User qset
+Host para
+    Hostname qse-ece-para-knl.smithengineering.queensu.ca
+    User 21jc138
 Host odpok
     Hostname jchisholm.ooguy.com
     Port 2021
