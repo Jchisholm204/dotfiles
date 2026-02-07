@@ -59,6 +59,10 @@ elif [ "$distro_id" = "ubuntu" ]; then
     fi
 fi
 
+if [ -f "/etc/bashrc" ]; then
+    source /etc/bashrc
+fi
+
 if [ -d "$HOME/.local/bin/" ]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
