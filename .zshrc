@@ -57,14 +57,22 @@ elif [ "$distro_id" = "ubuntu" ]; then
         export PATH=/usr/local/cuda-*/bin${PATH:+:${PATH}}
         export LD_LIBRARY_PATH=/usr/local/cuda-*/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
     fi
+else
+    # Source the global bash file if it exists (Narval/AllianceCAN)
+    if [ -f "/etc/bashrc" ]; then
+        source /etc/bashrc
+    fi
 fi
 
-if [ -f "/etc/bashrc" ]; then
-    source /etc/bashrc
-fi
-
+# Source the user install directory
 if [ -d "$HOME/.local/bin/" ]; then
     export PATH=$PATH:$HOME/.local/bin
+fi
+if [ -d "$HOME/.local/lib64" ]; then
+    export LD_LIBRARY_PATH=$HOME/.local/lib64:${LD_LIBRARY_PATH}
+fi
+if [ -d "$HOME/.local/lib" ]; then
+    export LD_LIBRARY_PATH=$HOME/.local/lib:${LD_LIBRARY_PATH}
 fi
 
 # Export Function for ModelSim/Quartus if they are installed
