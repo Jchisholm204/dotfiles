@@ -38,3 +38,12 @@ Host odpok
     Hostname jchisholm.ooguy.com
     Port 2021
     User jacob
+Host rome
+    Hostname gw.hpcadvisorycouncil.com
+    User jchisholm
+    IdentityFile ~/.ssh/council_thor
+    ProxyJump narval1
+Host eligus
+    Hostname jchisholm.ooguy.com
+    User jacob
+    IdentityFile ~/.ssh/eligus
