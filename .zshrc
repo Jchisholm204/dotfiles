@@ -15,7 +15,7 @@ function source_cuda(){
     # Test and export CUDA
     if [ -d "/usr/local/cuda-$1" ]; then
         export PATH=/usr/local/cuda-$1/bin${PATH:+:${PATH}}
-        export LD_LIBRARY_PATH=/usr/local/cuda-$1/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+        export LD_LIBRARY_PATH=/usr/local/cuda-$1/lib64/${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
     fi
 
 }
@@ -113,12 +113,6 @@ if   [ "$distro_id" = "fedora" ]; then
 fi
 unfunction exportAltera
 
-export EDITOR=nvim
-export VISUAL=nvim
-
-alias clear="clear && zsh"
-alias got=git
-
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
@@ -140,12 +134,21 @@ source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"
 
 export CLEAN_PATH=$PATH
-alias clean='env -i HOME=$HOME TERM=$TERM PATH=$CLEAN_PATH SHELL=zsh zsh'
+alias clean='exec env -i HOME=$HOME TERM=$TERM PATH=$CLEAN_PATH SHELL=zsh zsh'
 
-# Display System info on terminal opening
-if (( $+commands[fastfetch] )); then
-    fastfetch --config examples/9
-elif (( $+commands[neofetch] )); then
-    neofetch --ascii_distro tiny
-fi
+function sh_print_hello {
+    # Display System info on terminal opening
+    if (( $+commands[fastfetch] )); then
+        fastfetch --config examples/9
+    elif (( $+commands[neofetch] )); then
+        neofetch --ascii_distro tiny
+    fi
+}
 
+export EDITOR=nvim
+export VISUAL=nvim
+
+alias clear="clear && sh_print_hello"
+alias got=git
+
+sh_print_hello
