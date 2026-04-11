@@ -4,6 +4,7 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+
 function source_cuda(){
     if [ $# -ne 1 ]; then
         echo "Function source_cuda called with incorrect number of arguments"
@@ -59,8 +60,8 @@ elif [ "$distro_id" = "ubuntu" ]; then
     fi
 else
     # Source the global bash file if it exists (Narval/AllianceCAN)
-    if [ -f "/etc/bashrc" ]; then
-        source /etc/bashrc
+    if [ -f "/etc/zshrc" ]; then
+        source /etc/zshrc
     fi
 fi
 
@@ -138,10 +139,13 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(starship init zsh)"
 
+export CLEAN_PATH=$PATH
+alias clean='env -i HOME=$HOME TERM=$TERM PATH=$CLEAN_PATH SHELL=zsh zsh'
+
 # Display System info on terminal opening
-if [ -f "/bin/fastfetch" ]; then
+if (( $+commands[fastfetch] )); then
     fastfetch --config examples/9
-elif [ -f "/bin/neofetch" ]; then
+elif (( $+commands[neofetch] )); then
     neofetch --ascii_distro tiny
 fi
 
