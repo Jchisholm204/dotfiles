@@ -133,8 +133,19 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(starship init zsh)"
 
-export CLEAN_PATH=$PATH
-alias clean='exec env -i HOME=$HOME TERM=$TERM PATH=$CLEAN_PATH SHELL=zsh zsh'
+export _CLEAN_PATH=$PATH
+export _CLEAN_LDPATH=$LDPATH
+# alias clean='exec env -i HOME=$HOME TERM=$TERM PATH=$CLEAN_PATH SHELL=zsh zsh'
+function clean() {
+    exec /usr/bin/env -i \
+    HOME=$HOME \
+    TERM=$TERM \
+    SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+    SSH_CONNECTION=$SSH_CONNECTION \
+    PATH=$_CLEAN_PATH \
+    SHELL=zsh \
+    zsh
+}
 
 function sh_print_hello {
     # Display System info on terminal opening
