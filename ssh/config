@@ -13,29 +13,37 @@ Host narval
     Port 22
     User jc204
     IdentityFile ~/.ssh/narval
+    ProxyJump odpok
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h
 
 Host narval1
-    # Hostname narval1.alliancecan.ca
-    Hostname 132.219.138.65
+    # Hostname narval1 
+    # Hostname 132.219.138.65
+    Hostname narval1.alliancecan.ca
     Port 22
     User jc204
     IdentityFile ~/.ssh/narval
-    # ProxyJump narval2
+    # ProxyJump narval
+    ProxyJump narval narval2 narval3
     ControlMaster auto
     ControlPath ~/.ssh/sockets/%r@%h:%p
     ControlPersist 1h
 
 Host narval2
     # Hostname narval2.alliancecan.ca
-    Hostname 132.219.138.66
+    Hostname narval2.alliancecan.ca
+    # Hostname 132.219.138.66
     Port 22
+    ProxyJump odpok
     User jc204
     IdentityFile ~/.ssh/narval
     # ProxyJump narval
 
 Host narval3
-    # Hostname narval3.alliancecan.ca
-    Hostname 132.219.138.67
+    Hostname narval3.alliancecan.ca
+    # Hostname 132.219.138.67
     Port 22
     User jc204
     IdentityFile ~/.ssh/narval
@@ -68,6 +76,7 @@ Host odpok
     Hostname jchisholm.ooguy.com
     Port 2021
     User jacob
+    IdentityFile ~/.ssh/odpok
 
 Host eligus
     # Hostname jchisholm.ooguy.com
