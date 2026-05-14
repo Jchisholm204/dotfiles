@@ -42,7 +42,7 @@ if question "Install Fonts?"; then
     install_font 'FiraMono'
 fi
 
-PACKAGE_LIST=(alacritty tmux gh)
+PACKAGE_LIST=(alacritty tmux gh bat)
 for PACKAGE in ${PACKAGE_LIST[@]}; do
     if ! which $PACKAGE > /dev/null; then
         printf "Warning: Required package %s not found.\n" $PACKAGE
@@ -99,4 +99,17 @@ if question "Setup TMUX?"; then
     printf"->First Launch: <Prefix>-<Shift>-I\n"
 fi
 
+if question "Setup Git?"; then
+    if [[ ! -d "$HOME/.gitconfig" ]]; then
+        if question "Found old git conf. Backup?"; then
+            mv "$HOME/.gitconfig" "$HOME/.gitconfig.bak"
+        fi
+    fi
+    
+    install_gitconfig
+    
+fi
 
+if question "Done. Exec ZSH?"; then
+    exec zsh
+fi
