@@ -1,3 +1,6 @@
-[submodule "tmux"]
+[submodule "shell/tmux"]
 	path = shell/tmux
 	url = https://github.com/Jchisholm204/tmux
+[submodule "shell/neovim"]
+	path = shell/neovim
+	url = https://github.com/Jchisholm204/neovim
