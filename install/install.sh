@@ -1,4 +1,5 @@
-#!/bin/sh
+return 0
+#!/usr/bin/env zsh
 # Dotfiles Install Script
 # Jchisholm204.github.io
 
