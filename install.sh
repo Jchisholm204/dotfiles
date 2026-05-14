@@ -110,6 +110,10 @@ if question "Setup Git?"; then
     
 fi
 
+if question "Setup Gnome Settings"; then
+
+fi
+
 if question "Done. Exec ZSH?"; then
     exec zsh
 fi
