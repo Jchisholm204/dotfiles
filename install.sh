@@ -1,140 +1,165 @@
-#!/bin/sh
-# Dotfiles Install Script
-# Jchisholm204.github.io
+#!/usr/bin/env bash
 
-# Get the distro ID (for apt install)
-distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
-
-echo "Installing JC204 Config"
-C_DIR=$(pwd)
-echo "Installing from $C_DIR"
-
-echo "Have git submodules been initialized? [y/n]"
-read -r ans
-if [ "$ans" == "n" ]; then
-    echo "Git submodules must be initialized..Doing it now"
-    git submodule init
-    git submodule update
-fi
-
-# Install Function (for different distros)
-install() {
-    if [ $1 == "" ]; then
+function find_topdir() {
+    # Helper function to find the base repository directory (pure)
+    # Returns by echo, return value indicates git (0) or fallback (1)
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == true ]]; then
+        # Return through stdo (fd=1)
+        echo "$(git rev-parse --show-toplevel)"
+        echo "$(git rev-parse --show-toplevel)" >&2
+    else
+        # Compatibility layer for tarballs
+        printf "WARNING: Git repository not detected.\n" >& 2
+        printf "Using: %s as the top level directory.\n" $(pwd) >& 2
+        # Return through stdo (fd=1)
+        printf "%s" $(pwd)
         return 1
     fi
-    echo "Installing $1 for $distro_id"
-    if [ "$distro_id" = "fedora" ]; then
-        sudo dnf install $1
-    elif [ "$distro_id" = "ubuntu" ]; then
-        sudo apt-get install $1
-    elif [ "$distro_id" = "archlinux" ]; then
-        pacman -S $1
-    fi
-    return 0
 }
 
-echo "Setting up Fonts"
-
-FONT_DIR="$HOME/.local/share/fonts"
-
-if [ ! -d "$FONT_DIR" ]; then
-    mkdir "$FONT_DIR"
-    echo "Created $FONT_DIR"
-else
-    echo "Skipping Font Directory Creation Already Exists"
+if [[ $(git > /dev/null) ]]; then
+    printf "ERROR: Git is not installed. How did you get here?\n" >& 2
+    exit 1
 fi
 
-echo -n "Install Fonts [y/n]:"
-read -r ans
+export DOTFILES_BASE_DIR=$(find_topdir)
+export DOTFILES_SCRIPT_DIR="${DOTFILES_BASE_DIR}/install"
 
-if [ "$ans" == "y" ]; then
-    for FDIR in "$C_DIR"/fonts/*; do
-        [ -d "$FDIR" ] || continue;
-        echo "Copying Font: $(basename "$FDIR")"
-        cp "$FDIR"/* $FONT_DIR
-    done
-fi
+# Source all installation scripts
+for SCRIPT in $(ls $DOTFILES_SCRIPT_DIR); do
+   source "$DOTFILES_SCRIPT_DIR/$SCRIPT"
+done
 
-echo "Installed Fonts"
 
-echo "Install Alacritty? [y/n]"
-read -r ans
-if [ "$ans" == "y" ]; then
-    install "alacritty"
-    if [ ! -d "$HOME/.config/alacritty" ]; then
-        echo "Found an old Alacritty Config"
-        echo "Would you like to backup? [y/n]"
-        read -r ans
-        if [ "$ans" == "y" ]; then
-            mv "$HOME/.config/alacritty" "$HOME/.config/alacritty.bak"
-        else
-            rm -r "$HOME/.config/alacritty"
-        fi
-    fi
-    ln -s $(pwd)/alacritty "$HOME/.config/"
+printf "Installing JC204 Config from %s to %s\n" $DOTFILES_BASE_DIR $HOME
+
+
+if question "Initialize GIT Submodules?"; then
+    git submodule update --init --recursive &> /dev/null
 fi
 
 
-echo "Set up ZSH? [y/n]:"
-read -r ans
-if [ "$ans" == "y" ]; then
-    install "zsh"
-    echo "Install OhMyZsh? [y/n]"
-    read -r ans
-    if [ "$ans" == "y" ]; then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-        echo "Cloning zsh-autosuggestions"
-        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    fi
-    if [ ! -d  "$HOME/.zshrc" ]; then
-        echo "Found OLD ZSH Config: renamed to zshrc.bak"
-        mv "$HOME"/.zshrc "$HOME"/zshrc.bak
-    fi
-    ln -s $(pwd)/.zshrc "$HOME"
-    echo "Created ZSHrc Symlink"
-fi
+PACKAGE_LIST=(
+    alacritty
+    tmux
+    gh
+    bat
+    git-lfs
+    google-chrome-stable
+    gdb
+    valgrind
+    syncthing
+    flatseal
+)
 
-echo "Set up TMUX [y/n]"
-read -r ans
-if [ "$ans" == "y" ]; then
-    if [ ! $(ls /bin | grep tmux) == "tmux"]; then
-        echo "Attempting to install tmux"
-        install "tmux"
+if question "Install reccomended packages?"; then
+    if question "Bypass Questionaire?"; then
+        for PACKAGE in ${PACKAGE_LIST[@]}; do
+            install_package $PACKAGE
+        done
     else
-        echo "TMUX Installation Found"
+        for PACKAGE in ${PACKAGE_LIST[@]}; do
+            if ! which $PACKAGE > /dev/null; then
+                printf "Warning: Required package %s not found.\n" $PACKAGE
+                if question "Install ${PACKAGE}?"; then
+                    install_package $PACKAGE
+                fi
+                if ! which $PACKAGE > /dev/null; then
+                    printf "Warning: Required package %s not found.\n" $PACKAGE
+                fi
+            fi
+        done
     fi
-    echo "Looking for old TMUX Config"
-    if [ ! -d "$HOME/.tmux.conf" ]; then
-        echo "Found an old TMUX Config"
-        echo "Would you like to backup? [y/n]"
-        read -r ans
-        if [ "$ans" == "y" ]; then
-            mv "$HOME/.tmux.conf" "$HOME/tmux.conf.bak"
-        else
-            rm "$HOME/.tmux.conf"
-        fi
-    fi
-    ln -s $(pwd)/tmux/tmux.conf $HOME/.tmux.conf
-    tmux source $HOME/.tmux.conf
 fi
 
-echo "Set up Git? [y/n]"
-read -r ans
-if [ "$ans" == "y" ]; then
-    echo "Looking for old Git Config"
-    if [ ! -d "$HOME/.gitconfig" ]; then
-        echo "Found an old Git Config"
-        echo "Would you like to backup? [y/n]"
-        read -r ans
-        if [ "$ans" == "y" ]; then
-            mv "$HOME/.gitconfig" "$HOME/.gitconfig.bak"
-        else
-            rm "$HOME/.gitconfig"
-        fi
-    fi
-    ln -s "$(pwd)/git/.gitconfig" "$HOME/.gitconfig"
+if question "Install Fonts?"; then
+    install_font 'FiraMono'
 fi
+
+if question "Setup Alacritty?"; then
+    mkdir -p "$HOME/.config"
+    ln -s \
+    "${DOTFILES_BASE_DIR}/applications/alacritty" \
+    "$HOME/.config/alacritty"
+fi
+
+if question "Setup ZSH?"; then
     
-echo "Install Completed."
+    if question "Setup OhMyZsh? (yes)"; then
+    	install_ohmyzsh
+    fi
 
+    printf "Setting up zshrc\n"
+    if [[ -d "$HOME/.zshrc" ]]; then
+        if question "Found old zshrc. Backup?"; then
+            mv "$HOME/.zshrc" "$HOME/zshrc.bak"
+        fi
+	rm "${HOME}/.zshrc"
+    fi
 
+    ln -s \
+        "${DOTFILES_BASE_DIR}/shell/zsh/.zshrc" \
+        "${HOME}/.zshrc"
+fi
+
+if question "Setup TMUX?"; then
+    printf "Setting up tmux\n"
+    if [[ -d "$HOME/.tmux.conf" ]]; then
+        if question "Found old tmux conf. Backup?"; then
+            mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.bak"
+        fi
+    fi
+
+    ln -s \
+        "${DOTFILES_BASE_DIR}/shell/tmux/tmux.conf" \
+        "${HOME}/.tmux.conf"
+
+    tmux source $HOME/tmux.conf
+    # tmux set -g mouse
+
+    printf "Tmux has been set up.\n"
+    printf "->Prefix Key: <Ctrl>-<Space>\n"
+    printf "->First Launch: <Prefix>-<Shift>-I\n"
+fi
+
+if question "Setup Neovim?"; then
+    
+    printf "Setting up neovim\n"
+    if [[  -d "$HOME/.config/nvim" ]]; then
+        if question "Found old nvim config. Backup?"; then
+            mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
+        fi
+	rm -r "${HOME}/.config/nvim"
+    fi
+
+    ln -s \
+        "${DOTFILES_BASE_DIR}/shell/neovim" \
+        "${HOME}/.config/nvim"
+fi
+
+if question "Setup Git?"; then
+    if [[ ! -d "$HOME/.gitconfig" ]]; then
+        if question "Found old git conf. Backup?"; then
+            mv "$HOME/.gitconfig" "$HOME/.gitconfig.bak"
+        fi
+    fi
+    
+    install_gitconfig
+    
+    printf "Don't Forget:\n"
+    printf "  git config --global user.name 'Your Name'\n"
+    printf "  git config --global user.email 'you@email.com'\n"
+fi
+
+if question "Setup Gnome Settings"; then
+    if question "Setup UI?"; then
+        install_gnome_interface
+    fi
+    if question "Setup Custom Keybinds?"; then
+        install_gnome_keybindings
+    fi
+fi
+
+if question "Done. Exec ZSH?"; then
+    exec zsh
+fi
