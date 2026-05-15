@@ -127,6 +127,9 @@ if question "Setup Git?"; then
     
     install_gitconfig
     
+    printf "Don't Forget:\n"
+    printf "  git config --global user.name 'Your Name'\n"
+    printf "  git config --global user.email 'you@email.com'\n"
 fi
 
 if question "Setup Gnome Settings"; then
