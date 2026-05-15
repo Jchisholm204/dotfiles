@@ -38,6 +38,10 @@ if question "Initialize GIT Submodules?"; then
     git submodule update --init --recursive &> /dev/null
 fi
 
+if question "Add COPR Repos?"; then
+    sudo dnf copr enable jchisholm204/Alacritty
+    sudo dnf copr enable jchisholm204/neovim
+fi
 
 PACKAGE_LIST=(
     alacritty
