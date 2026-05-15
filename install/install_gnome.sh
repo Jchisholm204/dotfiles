@@ -17,18 +17,6 @@ install_gnome_interface() {
     gsettings set org.gnome.desktop.interface font-hinting 'slight'
 }
 
-install_gnome_background() {
-    echo "Configuring Background and Screensaver..."
-    # Desktop Background
-    gsettings set org.gnome.desktop.background picture-uri 'file:///home/jacob/.local/share/backgrounds/2024-12-28-15-15-03-fwwallpaper.webp'
-    gsettings set org.gnome.desktop.background picture-uri-dark 'file:///home/jacob/.local/share/backgrounds/2024-12-28-15-15-03-fwwallpaper.webp'
-    gsettings set org.gnome.desktop.background picture-options 'zoom'
-    
-    # Screensaver/Lockscreen
-    gsettings set org.gnome.desktop.screensaver picture-uri 'file:///home/jacob/.local/share/backgrounds/2024-12-28-15-15-03-fwwallpaper.webp'
-    gsettings set org.gnome.desktop.screensaver picture-options 'zoom'
-}
-
 install_gnome_keybindings() {
     echo "Configuring Window Manager and Keybindings..."
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 5
@@ -75,24 +63,3 @@ install_gnome_keybindings() {
     gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Shift><Super>s']"
 
 }
-
-install_gnome_peripherals() {
-    echo "Configuring Peripherals and Privacy..."
-    # Mouse and Touchpad
-    gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
-    gsettings set org.gnome.desktop.peripherals.mouse speed -0.21518987341772156
-    gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
-    
-    # Privacy & Session
-    gsettings set org.gnome.desktop.privacy disable-camera true
-    gsettings set org.gnome.desktop.privacy old-files-age 30
-    gsettings set org.gnome.desktop.session idle-delay 0
-}
-
-install_gnome_shell() {
-    echo "Configuring Shell Extensions and Favorites..."
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop']"
-    gsettings set org.gnome.shell enabled-extensions "['system-monitor@gnome-shell-extensions.gcampax.github.com']"
-    gsettings set org.gnome.shell disabled-extensions "['auto-move-windows@gnome-shell-extensions.gcampax.github.com']"
-}
-

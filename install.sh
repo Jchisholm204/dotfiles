@@ -76,7 +76,6 @@ if question "Setup ZSH?"; then
     ln -s \
         "${DOTFILES_BASE_DIR}/shell/zsh/.zshrc" \
         "${HOME}/.zshrc"
-
 fi
 
 if question "Setup TMUX?"; then
@@ -111,7 +110,12 @@ if question "Setup Git?"; then
 fi
 
 if question "Setup Gnome Settings"; then
-
+    if question "Setup UI?"; then
+        install_gnome_interface > /dev/null
+    fi
+    if question "Setup Custom Keybinds?"; then
+        install_gnome_interface > /dev/null
+    fi
 fi
 
 if question "Done. Exec ZSH?"; then
