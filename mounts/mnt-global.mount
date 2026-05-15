@@ -1,0 +1,12 @@
+[Unit]
+Description=Global Subvolume
+
+[Mount]
+What=/dev/disk/by-uuid/f347a508-02b3-4f14-bf8b-0323f3996cd6
+Where=/mnt/global
+Type=btrfs
+Options=subvol=global,compress=zstd:1,nofail
+LazyUnmount=true
+
+[Install]
+WantedBy=multi-user.target

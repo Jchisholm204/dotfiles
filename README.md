@@ -41,6 +41,11 @@ After installing, the following manual configuration may be required.
 2. Launch TMUX and execute `<ctrl>-<space> + <shift>-I` to install plugins
 3. Open Neovim to install plugins
 
+## Global Mounting
+Mount files are stored under `./mounts`.
+This is not part of the normal install.
+If using "global" pathing, set up the btrfs subvolumes yourself.
+
 # Usage
 
 ## Alacritty
