@@ -41,6 +41,7 @@ fi
 if question "Add COPR Repos?"; then
     sudo dnf copr enable jchisholm204/Alacritty
     sudo dnf copr enable jchisholm204/neovim
+    sudo dnf copr enable jchisholm204/JacobEPEL
 fi
 
 PACKAGE_LIST=(
