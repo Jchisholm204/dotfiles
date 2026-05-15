@@ -38,24 +38,43 @@ if question "Initialize GIT Submodules?"; then
     git submodule update --init --recursive &> /dev/null
 fi
 
-if question "Install Fonts?"; then
-    if install_font 'FiraMono'; then
-	    echo "fail"
+
+PACKAGE_LIST=(
+    alacritty
+    tmux
+    gh
+    bat
+    git-lfs
+    google-chrome-stable
+    gdb
+    valgrind
+    syncthing
+    flatseal
+)
+
+if question "Install reccomended packages?"; then
+    if question "Bypass Questionaire?"; then
+        for PACKAGE in ${PACKAGE_LIST[@]}; do
+            install_package $PACKAGE
+        done
+    else
+        for PACKAGE in ${PACKAGE_LIST[@]}; do
+            if ! which $PACKAGE > /dev/null; then
+                printf "Warning: Required package %s not found.\n" $PACKAGE
+                if question "Install ${PACKAGE}?"; then
+                    install_package $PACKAGE
+                fi
+                if ! which $PACKAGE > /dev/null; then
+                    printf "Warning: Required package %s not found.\n" $PACKAGE
+                fi
+            fi
+        done
     fi
 fi
 
-PACKAGE_LIST=(alacritty tmux gh bat git-lfs)
-for PACKAGE in ${PACKAGE_LIST[@]}; do
-    if ! which $PACKAGE > /dev/null; then
-        printf "Warning: Required package %s not found.\n" $PACKAGE
-        if question "Install ${PACKAGE}?"; then
-            install_package $PACKAGE
-        fi
-        if ! which $PACKAGE > /dev/null; then
-            printf "Warning: Required package %s not found.\n" $PACKAGE
-        fi
-    fi
-done
+if question "Install Fonts?"; then
+    install_font 'FiraMono'
+fi
 
 if question "Setup Alacritty?"; then
     mkdir -p "$HOME/.config"
