@@ -39,10 +39,12 @@ if question "Initialize GIT Submodules?"; then
 fi
 
 if question "Install Fonts?"; then
-    install_font 'FiraMono'
+    if install_font 'FiraMono'; then
+	    echo "fail"
+    fi
 fi
 
-PACKAGE_LIST=(alacritty tmux gh bat)
+PACKAGE_LIST=(alacritty tmux gh bat git-lfs)
 for PACKAGE in ${PACKAGE_LIST[@]}; do
     if ! which $PACKAGE > /dev/null; then
         printf "Warning: Required package %s not found.\n" $PACKAGE
@@ -64,13 +66,16 @@ fi
 
 if question "Setup ZSH?"; then
     
-    install_ohmyzsh
+    if question "Setup OhMyZsh? (yes)"; then
+    	install_ohmyzsh
+    fi
 
     printf "Setting up zshrc\n"
-    if [[ ! -d "$HOME/.zshrc" ]]; then
+    if [[ -d "$HOME/.zshrc" ]]; then
         if question "Found old zshrc. Backup?"; then
             mv "$HOME/.zshrc" "$HOME/zshrc.bak"
         fi
+	rm "${HOME}/.zshrc"
     fi
 
     ln -s \
@@ -80,7 +85,7 @@ fi
 
 if question "Setup TMUX?"; then
     printf "Setting up tmux\n"
-    if [[ ! -d "$HOME/.tmux.conf" ]]; then
+    if [[ -d "$HOME/.tmux.conf" ]]; then
         if question "Found old tmux conf. Backup?"; then
             mv "$HOME/.tmux.conf" "$HOME/.tmux.conf.bak"
         fi
@@ -93,9 +98,24 @@ if question "Setup TMUX?"; then
     tmux source $HOME/tmux.conf
     # tmux set -g mouse
 
-    printf"Tmux has been set up.\n"
-    printf"->Prefix Key: <Ctrl>-<Space>\n"
-    printf"->First Launch: <Prefix>-<Shift>-I\n"
+    printf "Tmux has been set up.\n"
+    printf "->Prefix Key: <Ctrl>-<Space>\n"
+    printf "->First Launch: <Prefix>-<Shift>-I\n"
+fi
+
+if question "Setup Neovim?"; then
+    
+    printf "Setting up neovim\n"
+    if [[  -d "$HOME/.config/nvim" ]]; then
+        if question "Found old nvim config. Backup?"; then
+            mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
+        fi
+	rm -r "${HOME}/.config/nvim"
+    fi
+
+    ln -s \
+        "${DOTFILES_BASE_DIR}/shell/neovim" \
+        "${HOME}/.config/nvim"
 fi
 
 if question "Setup Git?"; then
@@ -111,10 +131,10 @@ fi
 
 if question "Setup Gnome Settings"; then
     if question "Setup UI?"; then
-        install_gnome_interface > /dev/null
+        install_gnome_interface
     fi
     if question "Setup Custom Keybinds?"; then
-        install_gnome_interface > /dev/null
+        install_gnome_keybindings
     fi
 fi
 

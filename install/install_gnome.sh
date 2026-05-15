@@ -20,6 +20,7 @@ install_gnome_interface() {
 install_gnome_keybindings() {
     echo "Configuring Window Manager and Keybindings..."
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 5
+    gsettings set org.gnome.mutter dynamic-workspaces false
     
     # Custom Shortcuts
     gsettings set org.gnome.desktop.wm.keybindings close "['<Super>c']"
