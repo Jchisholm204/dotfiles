@@ -83,3 +83,9 @@ Host eligus
     Hostname 192.168.2.224
     User jacob
     IdentityFile ~/.ssh/eligus
+
+
+Host sparrow
+    Hostname 192.168.86.48
+    User sparrow
+    IdentityFile ~/.ssh/sparrow
