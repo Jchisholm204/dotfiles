@@ -55,6 +55,9 @@ PACKAGE_LIST=(
     valgrind
     syncthing
     flatseal
+    zsh
+    cmake
+    wget
 )
 
 if question "Install reccomended packages?"; then
@@ -76,6 +79,12 @@ if question "Install reccomended packages?"; then
         done
     fi
 fi
+# Check for all packages being present
+for PACKAGE in ${PACKAGE_LIST[@]}; do
+    if ! which $PACKAGE > /dev/null; then
+        printf "Warning: Required package %s not found.\n" $PACKAGE
+    fi
+done
 
 if question "Install Fonts?"; then
     install_font 'FiraMono'
@@ -137,6 +146,7 @@ if question "Setup Neovim?"; then
 	rm -r "${HOME}/.config/nvim"
     fi
 
+    mkdir -p "${HOME}/.config"
     ln -s \
         "${DOTFILES_BASE_DIR}/shell/neovim" \
         "${HOME}/.config/nvim"
@@ -154,6 +164,14 @@ if question "Setup Git?"; then
     printf "Don't Forget:\n"
     printf "  git config --global user.name 'Your Name'\n"
     printf "  git config --global user.email 'you@email.com'\n"
+fi
+
+if question "Setup SSH Config?"; then
+    mkdir -p $HOME/.ssh
+    mkdir -p $HOME/.ssh/sockets
+    ln -s \
+        "${DOTFILES_BASE_DIR}/shell/ssh" \
+        "${HOME}/.ssh"
 fi
 
 if question "Setup Gnome Settings"; then
