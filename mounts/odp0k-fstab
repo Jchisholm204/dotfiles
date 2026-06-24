@@ -1,0 +1,30 @@
+# /etc/fstab
+# After editing this file, run 'systemctl daemon-reload' to update systemd
+# units generated from this file.
+
+# System Mounts
+UUID=853b84d5-1eea-4e16-b8a0-6b682d8ab1af /                       btrfs   subvol=alma10_root,compress=zstd:1 0 0
+UUID=853b84d5-1eea-4e16-b8a0-6b682d8ab1af /home                   btrfs   subvol=alma10_home,compress=zstd:1 0 0
+UUID=cf7a7fc2-cb8d-4cc4-ac8a-2c34d4da2af2 /boot                   xfs     defaults        0 0
+UUID=0855-D1ED         			  /boot/efi               vfat    umask=0077,shortname=winnt 0 2
+UUID=64b4836d-025f-49e6-8c3c-873f97ef7887 none                    swap    defaults        0 0
+
+# Global Mountpoints
+UUID=853b84d5-1eea-4e16-b8a0-6b682d8ab1af /global                 btrfs   subvol=global,compress=zstd:1   0 0
+UUID=853b84d5-1eea-4e16-b8a0-6b682d8ab1af /global/games           btrfs   subvol=global/games,nofail 0 0
+UUID=853b84d5-1eea-4e16-b8a0-6b682d8ab1af /global/home            btrfs   subvol=global/home,compress=zstd:1 0 0
+
+# Home Mountpoints (From /global/home)
+/global/home/Documents 			  /home/jacob/Documents   none    bind,nofail
+/global/home/Desktop 			  /home/jacob/Desktop 	  none    bind,nofail
+/global/home/Downloads 			  /home/jacob/Downloads   none    bind,nofail
+/global/home/Music 			  /home/jacob/Music	  none    bind,nofail
+/global/home/Notebook 			  /home/jacob/Notebook	  none    bind,nofail
+/global/home/Pictures 			  /home/jacob/Pictures    none    bind,nofail
+/global/home/Templates 			  /home/jacob/Templates   none    bind,nofail
+/global/home/Videos 			  /home/jacob/Videos	  none    bind,nofail
+
+# Extra Drives
+/dev/disk/by-uuid/D2F21B33F21B1B75 	  /mnt/Segate 		  ntfs    windows_names,nosuid,nodev,nofail,x-gvfs-show,uid=1000,gid=1000,umask=022 0 0
+/dev/disk/by-uuid/FC92545C92541D88        /mnt/Windows 		  auto    nosuid,nodev,nofail,x-gvfs-show 0 0
+
