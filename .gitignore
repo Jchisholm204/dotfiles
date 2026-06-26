@@ -2,3 +2,4 @@
 shell/ssh/*
 !shell/ssh/
 !shell/ssh/config
+!shell/ssh/config.d/

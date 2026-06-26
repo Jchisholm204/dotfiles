@@ -1,0 +1,34 @@
+Host narval
+    Hostname narval.alliancecan.ca
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h
+    # ProxyJump sparrow
+
+Host narval1
+    # Hostname narval1 
+    Hostname 132.219.138.65
+    # Hostname narval1.alliancecan.ca
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h
+
+Host narval2
+    Hostname narval2.alliancecan.ca
+    # Hostname 132.219.138.66
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}
+
+Host narval3
+    Hostname narval3.alliancecan.ca
+    # Hostname 132.219.138.67
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}

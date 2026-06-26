@@ -1,0 +1,17 @@
+Host rorqual
+    Hostname rorqual.alliancecan.ca
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h
+
+Host rorqual1
+    Hostname rorqual1.alliancecan.ca
+    Port 22
+    User jc204
+    # IdentityFile ${keepassxc}
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h

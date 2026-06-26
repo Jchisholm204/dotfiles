@@ -1,0 +1,10 @@
+Host sparrow-local
+    Hostname 192.168.50.20
+    User sparrow
+    # IdentityFile ${keepassxc}
+
+Host sparrow
+    Hostname northwood.ooguy.com
+    Port 29525
+    User sparrow
+    # IdentityFile ${keepassxc}

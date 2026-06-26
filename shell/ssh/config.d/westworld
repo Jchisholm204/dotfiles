@@ -1,0 +1,11 @@
+Host odpok
+    Hostname jchisholm.ooguy.com
+    Port 2021
+    User jacob
+    # IdentityFile ${keepassxc}
+
+Host eligus
+    # Hostname jchisholm.ooguy.com
+    Hostname 192.168.2.224
+    User jacob
+    # IdentityFile ${keepassxc}

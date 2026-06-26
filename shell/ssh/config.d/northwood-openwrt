@@ -1,0 +1,20 @@
+Host nw-openwrt-ap1
+    Hostname 192.168.50.1
+    User root
+    # IdentityFile ${keepassxc}
+
+Host nw-openwrt-ap2
+    Hostname 192.168.50.2
+    User root
+    # IdentityFile ${keepassxc}
+
+Host nw-openwrt-ap3
+    Hostname 192.168.50.3
+    User root
+    # IdentityFile ${keepassxc}
+
+Host nw-openwrt-ap4
+    Hostname 192.168.50.4
+    User root
+    # IdentityFile ${keepassxc}
+

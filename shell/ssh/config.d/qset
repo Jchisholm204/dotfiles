@@ -1,0 +1,4 @@
+Host qarm
+    Hostname QSET-ARM.local
+    User qset
+

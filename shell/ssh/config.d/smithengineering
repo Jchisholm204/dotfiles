@@ -1,0 +1,10 @@
+# Queensu Gitlab
+Host code.engineering.queensu.ca
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_gitlab
+
+# Queensu Gitlab
+Host code.smithengineering.queensu.ca
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_gitlabft
+

@@ -1,0 +1,7 @@
+Host osprey
+    Hostname osprey.webredirect.org
+    User osprey
+    Port 2283
+    # Force ipv4
+    AddressFamily inet
+
