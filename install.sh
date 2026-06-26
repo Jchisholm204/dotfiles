@@ -104,7 +104,7 @@ if question "Setup ZSH?"; then
     fi
 
     printf "Setting up zshrc\n"
-    if [[ -d "$HOME/.zshrc" ]]; then
+    if [[ -f "$HOME/.zshrc" ]]; then
         if question "Found old zshrc. Backup?"; then
             mv "$HOME/.zshrc" "$HOME/zshrc.bak"
         fi
