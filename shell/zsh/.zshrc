@@ -150,7 +150,11 @@ function clean() {
 function sh_print_hello {
     # Display System info on terminal opening
     if (( $+commands[fastfetch] )); then
-        fastfetch --config examples/9
+        if [[ -d $HOME/.config/fastfetch ]]; then
+            fastfetch
+        else
+            fastfetch --config examples/9
+        fi
     elif (( $+commands[neofetch] )); then
         neofetch --ascii_distro tiny
     fi
