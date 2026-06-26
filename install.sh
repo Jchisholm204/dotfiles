@@ -104,7 +104,7 @@ if question "Setup ZSH?"; then
     fi
 
     printf "Setting up zshrc\n"
-    if [[ -d "$HOME/.zshrc" ]]; then
+    if [[ -f "$HOME/.zshrc" ]]; then
         if question "Found old zshrc. Backup?"; then
             mv "$HOME/.zshrc" "$HOME/zshrc.bak"
         fi
@@ -167,11 +167,19 @@ if question "Setup Git?"; then
 fi
 
 if question "Setup SSH Config?"; then
-    mkdir -p $HOME/.ssh
-    mkdir -p $HOME/.ssh/sockets
+    if [[ ! -d "$HOME/.ssh" ]]; then
+        if question "Found old ssh conf. Backup?"; then
+            mv "$HOME/.ssh" "$HOME/.ssh.bak"
+        fi
+    fi
+
+    # Symlink the entire folder
     ln -s \
         "${DOTFILES_BASE_DIR}/shell/ssh" \
         "${HOME}/.ssh"
+
+    # Create the sockets folder
+    mkdir -p $HOME/.ssh/sockets
 fi
 
 if question "Setup Gnome Settings"; then
