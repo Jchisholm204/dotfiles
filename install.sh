@@ -132,8 +132,8 @@ if question "Setup TMUX?"; then
     # tmux set -g mouse
 
     printf "Tmux has been set up.\n"
-    printf "->Prefix Key: <Ctrl>-<Space>\n"
-    printf "->First Launch: <Prefix>-<Shift>-I\n"
+    printf '->Prefix Key: <Ctrl>-<Space>\n'
+    printf '->First Launch: <Prefix>-<Shift>-I\n'
 fi
 
 if question "Setup Neovim?"; then
