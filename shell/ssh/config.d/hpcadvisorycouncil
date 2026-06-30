@@ -3,3 +3,6 @@ Host rome
     User jchisholm
     # IdentityFile ${keepassxc}
     ProxyJump rorqual1
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 1h

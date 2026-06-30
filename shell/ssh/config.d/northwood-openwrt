@@ -3,6 +3,12 @@ Host nw-openwrt-ap1
     User root
     # IdentityFile ${keepassxc}
 
+Host nw-openwrt-ap1-ext
+    Hostname northwood.ooguy.com
+    Port 27476
+    User root
+    # IdentityFile ${keepassxc}
+
 Host nw-openwrt-ap2
     Hostname 192.168.50.2
     User root
