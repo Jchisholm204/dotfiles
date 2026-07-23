@@ -43,6 +43,10 @@ if   [ "$distro_id" = "fedora" ]; then
     export PATH=$PATH:/opt/riscv/bin
     fi
 
+    if [[ -d "$HOME/.modules/modfiles" ]]; then
+        module use "$HOME/.modules/modfiles"
+    fi
+
 # Setup for Ubuntu
 elif [ "$distro_id" = "ubuntu" ]; then
     # Attempt to load ROS2 Humble first
