@@ -46,6 +46,9 @@ if   [ "$distro_id" = "fedora" ]; then
     if [[ -d "$HOME/.modules/modfiles" ]]; then
         module use "$HOME/.modules/modfiles"
     fi
+    if [[ -d "/global/modules/modfiles" ]]; then
+        module use "/global/modules/modfiles"
+    fi
 
 # Setup for Ubuntu
 elif [ "$distro_id" = "ubuntu" ]; then
@@ -167,7 +170,10 @@ function sh_print_hello {
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Alias
 alias clear="clear && sh_print_hello"
 alias got=git
+alias tmucx=tmux
+alias tmuxc=tmux
 
 sh_print_hello
