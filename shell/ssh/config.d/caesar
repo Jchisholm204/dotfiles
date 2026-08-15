@@ -1,0 +1,3 @@
+Host caesar-cluster
+    Hostname cluster.caesar.queensu.ca
+    User jchisholm

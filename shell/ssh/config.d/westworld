@@ -1,11 +1,18 @@
 Host odpok
-    Hostname jchisholm.ooguy.com
+    Hostname 192.168.75.44
     Port 2021
     User jacob
     # IdentityFile ${keepassxc}
 
 Host eligus
     # Hostname jchisholm.ooguy.com
-    Hostname 192.168.2.224
-    User jacob
+    Hostname 192.168.75.20
+    User eligus
     # IdentityFile ${keepassxc}
+
+Host archer
+    Hostname 192.168.75.1
+    User root
+    Port 22
+    # IdentityFile ${keepassxc}
+
