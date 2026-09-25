@@ -20,7 +20,7 @@ function source_cuda(){
 
 }
 
-distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
+distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2 | tr -d '"' )
 # Change source paths depending on distro (Desktop=Ubuntu:Laptop=Fedora)
 # Setup for Fedora
 if   [[ "$distro_id" = 'fedora' || "$distro_id" = 'almalinux' || "$distro_id" = 'rockylinux' ]]; then
