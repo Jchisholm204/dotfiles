@@ -23,7 +23,7 @@ function source_cuda(){
 distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
 # Change source paths depending on distro (Desktop=Ubuntu:Laptop=Fedora)
 # Setup for Fedora
-if   [ "$distro_id" = "fedora" ]; then
+if   [ "$distro_id" = "fedora" || "$distro_id" = 'almalinux' || "$distro_id" == 'rockylinux']; then
     # Check and source Fedora Module Manager (if it exists)
     # Will be needed to use MPI once installed
     if [ -f "/etc/profile.d/modules.sh" ]; then
