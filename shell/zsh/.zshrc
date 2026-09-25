@@ -23,7 +23,7 @@ function source_cuda(){
 distro_id=$(cat /etc/*release | grep "^ID=" | cut -d'=' -f2)
 # Change source paths depending on distro (Desktop=Ubuntu:Laptop=Fedora)
 # Setup for Fedora
-if   [ "$distro_id" = "fedora" || "$distro_id" = 'almalinux' || "$distro_id" == 'rockylinux']; then
+if   [[ "$distro_id" = 'fedora' || "$distro_id" = 'almalinux' || "$distro_id" = 'rockylinux' ]]; then
     # Check and source Fedora Module Manager (if it exists)
     # Will be needed to use MPI once installed
     if [ -f "/etc/profile.d/modules.sh" ]; then
@@ -50,7 +50,7 @@ if   [ "$distro_id" = "fedora" || "$distro_id" = 'almalinux' || "$distro_id" == 
     fi
 
 # Setup for Ubuntu
-elif [ "$distro_id" = "ubuntu" ]; then
+elif [[ "$distro_id" = "ubuntu" ]]; then
     # Attempt to load ROS2 Humble first
     if [ -d "/opt/ros/humble" ]; then
         source /opt/ros/humble/setup.zsh
