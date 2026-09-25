@@ -43,11 +43,10 @@ if   [ "$distro_id" = "fedora" ]; then
     export PATH=$PATH:/opt/riscv/bin
     fi
 
-    if [[ -d "$HOME/.modules/modfiles" ]]; then
-        module use "$HOME/.modules/modfiles"
-    fi
     if [[ -d "/global/modules/modfiles" ]]; then
         module use "/global/modules/modfiles"
+    elif [[ -d "$HOME/.modules/modfiles" ]]; then
+        module use "$HOME/.modules/modfiles"
     fi
 
 # Setup for Ubuntu
